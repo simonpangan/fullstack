@@ -3,7 +3,15 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+import { Form, HasError, AlertError } from 'vform'
 import VueRouter from 'vue-router';
+
+
+//global  // means can access in any url
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
 
 Vue.use(VueRouter);
 
