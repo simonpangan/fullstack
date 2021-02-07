@@ -17,6 +17,8 @@ let routes = [
 
 
 const router = new VueRouter({
+  mode:'history', 
+  // to remove /home in the route  just the /dashboard or / profile instead of /home/profile
   routes 
 });
 
@@ -27,3 +29,6 @@ const app = new Vue({
     el: '#app',
     router
 });
+
+
+

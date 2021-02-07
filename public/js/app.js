@@ -1942,6 +1942,8 @@ var routes = [{
   component: __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue").default
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__.default({
+  mode: 'history',
+  // to remove /home in the route  just the /dashboard or / profile instead of /home/profile
   routes: routes
 }); // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 

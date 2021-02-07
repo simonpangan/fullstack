@@ -19,7 +19,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition sidebar-mini" >
     <div class="wrapper" id="app">
 
-        <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
@@ -83,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link active">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Management
@@ -134,6 +133,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
+                
+                    
                     <router-view></router-view>
                 </div>
             </div>
