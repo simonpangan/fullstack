@@ -9,15 +9,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>AdminLTE 3 | Starter</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 
 </head>
 
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+<body class="hold-transition sidebar-mini" >
+    <div class="wrapper" id="app">
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -74,12 +74,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         data-accordion="false">
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <router-link to="/dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt blue"></i>
                                 <p>
                                     Dashboard
                                 </p>
-                            </a>
+                            </router-link>
                         </li>
 
                         <li class="nav-item has-treeview">
@@ -106,12 +106,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <router-link to="/profile" class="nav-link">
                                 <i class="nav-icon fas fa-user orange"></i>
                                 <p>
                                     Profile
                                 </p>
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -131,13 +131,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-
-
-            <!-- Main content -->
+        <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
-             
-                </div><!-- /.container-fluid -->
+                    <router-view></router-view>
+                </div>
             </div>
             <!-- /.content -->
         </div>
