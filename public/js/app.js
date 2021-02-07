@@ -2093,11 +2093,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2110,6 +2105,11 @@ __webpack_require__.r(__webpack_exports__);
         photo: ""
       })
     };
+  },
+  methods: {
+    createUser: function createUser() {
+      this.form.data('api/user');
+    }
   },
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -38909,10 +38909,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.login($event)
-                    },
-                    keydown: function($event) {
-                      return _vm.form.onKeydown($event)
+                      return _vm.createUser($event)
                     }
                   }
                 },
@@ -39145,19 +39142,10 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { disabled: _vm.form.busy, type: "submit" }
-                    },
-                    [_vm._v("\n              Log In\n            ")]
-                  )
+                  _vm._m(2)
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _vm._m(2)
+            ])
           ])
         ])
       ]
@@ -39277,7 +39265,7 @@ var staticRenderFns = [
           staticClass: "btn btn-danger",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
-        [_vm._v("\n            Close\n          ")]
+        [_vm._v("\n                Close\n              ")]
       ),
       _vm._v(" "),
       _c(
