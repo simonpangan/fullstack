@@ -88,7 +88,7 @@
               <div class="form-group">
                 <label>Email</label>
                 <input
-                  v-model="form.password"
+                  v-model="form.email"
                   type="email"
                   name="email"
                   placeholder="Email Address"
@@ -101,7 +101,7 @@
               <div class="form-group">
                 <label>Type</label>
                 <select
-                  v-model="form.password"
+                  v-model="form.type"
                   type="text"
                   name="type"
                   placeholder="User Type"
@@ -119,7 +119,7 @@
               <div class="form-group">
                 <label>Bio</label>
                 <textarea
-                  v-model="form.password"
+                  v-model="form.bio"
                   type="text"
                   name="bio"
                   placeholder="Short bio for the user"
@@ -150,7 +150,7 @@
                 >
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Create</button>
               </div>
             </form>
           </div>
@@ -165,18 +165,18 @@ export default {
   data() {
     return {
       form: new Form({
-        name: "",
-        email: "",
-        password: "",
-        type: "",
-        bio: "",
-        photo: "",
+        name: '',
+        email: '',
+        password: '',
+        type: '',
+        bio: '',
+        photo: '',
       }),
     };
   },
   methods: {
     createUser() {
-      this.form.data('api/user');
+      this.form.post('api/user');
     }
   },
   mounted() {

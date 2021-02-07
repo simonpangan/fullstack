@@ -2097,18 +2097,18 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: new Form({
-        name: "",
-        email: "",
-        password: "",
-        type: "",
-        bio: "",
-        photo: ""
+        name: '',
+        email: '',
+        password: '',
+        type: '',
+        bio: '',
+        photo: ''
       })
     };
   },
   methods: {
     createUser: function createUser() {
-      this.form.data('api/user');
+      this.form.post('api/user');
     }
   },
   mounted: function mounted() {
@@ -38965,8 +38965,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.password,
-                            expression: "form.password"
+                            value: _vm.form.email,
+                            expression: "form.email"
                           }
                         ],
                         staticClass: "form-control",
@@ -38976,13 +38976,13 @@ var render = function() {
                           name: "email",
                           placeholder: "Email Address"
                         },
-                        domProps: { value: _vm.form.password },
+                        domProps: { value: _vm.form.email },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "password", $event.target.value)
+                            _vm.$set(_vm.form, "email", $event.target.value)
                           }
                         }
                       }),
@@ -39007,8 +39007,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.password,
-                              expression: "form.password"
+                              value: _vm.form.type,
+                              expression: "form.type"
                             }
                           ],
                           staticClass: "form-control",
@@ -39030,7 +39030,7 @@ var render = function() {
                                 })
                               _vm.$set(
                                 _vm.form,
-                                "password",
+                                "type",
                                 $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
@@ -39075,8 +39075,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.password,
-                            expression: "form.password"
+                            value: _vm.form.bio,
+                            expression: "form.bio"
                           }
                         ],
                         staticClass: "form-control",
@@ -39086,13 +39086,13 @@ var render = function() {
                           name: "bio",
                           placeholder: "Short bio for the user"
                         },
-                        domProps: { value: _vm.form.password },
+                        domProps: { value: _vm.form.bio },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "password", $event.target.value)
+                            _vm.$set(_vm.form, "bio", $event.target.value)
                           }
                         }
                       }),
@@ -39270,7 +39270,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Create")]
       )
     ])
