@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 
-<body class="hold-transition sidebar-mini" >
+<body class="hold-transition sidebar-mini">
     <div class="wrapper" id="app">
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
+                                <i class="nav-icon fas fa-cog green"></i>
                                 <p>
                                     Management
                                     <i class="right fas fa-angle-left"></i>
@@ -113,14 +113,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-power-off"></i>
+                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">
+                                <i class="nav-icon fas fa-power-off red"></i>
                                 <p>
-                                    Logout
+                                    {{ __('Logout') }}
                                 </p>
                             </a>
-                        </li>
 
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -130,11 +134,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-        <!-- Main content -->
+            <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
-                
-                    
+
+
                     <router-view></router-view>
                 </div>
             </div>
