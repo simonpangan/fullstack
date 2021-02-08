@@ -2074,17 +2074,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       editMode: true,
       users: {},
       form: new Form({
+        id: "",
         name: "",
         email: "",
         password: "",
@@ -2102,7 +2098,21 @@ __webpack_require__.r(__webpack_exports__);
       $("#exampleModal").modal("show");
       this.form.fill(user);
     },
-    updateUser: function updateUser() {},
+    updateUser: function updateUser() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/user/' + this.form.id).then(function () {
+        swal.fire("Updated!", "Inforamtion has been Updated.", "success");
+        $("#exampleModal").modal("hide");
+
+        _this.$Progress.finish();
+
+        Fire.$emit("loadUser");
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
+    },
     newModal: function newModal() {
       this.editMode = false;
       this.form.clear();
@@ -2110,7 +2120,7 @@ __webpack_require__.r(__webpack_exports__);
       $("#exampleModal").modal("show");
     },
     deleteUser: function deleteUser(id) {
-      var _this = this;
+      var _this2 = this;
 
       swal.fire({
         title: "Are you sure?",
@@ -2122,7 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this.form["delete"]("api/user/" + id).then(function () {
+          _this2.form["delete"]("api/user/" + id).then(function () {
             Fire.$emit("loadUser");
             swal.fire("Deleted!", "Data has been deleted.", "success");
           });
@@ -2132,11 +2142,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadUsers: function loadUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("api/user").then(function (_ref) {
         var data = _ref.data;
-        return _this2.users = data.data;
+        return _this3.users = data.data;
       });
     },
     createUser: function createUser() {
@@ -2153,11 +2163,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.loadUsers();
     Fire.$on("loadUser", function () {
-      return _this3.loadUsers();
+      return _this4.loadUsers();
     }); //   setInterval(() => this.loadUsers(),3000);
   }
 });

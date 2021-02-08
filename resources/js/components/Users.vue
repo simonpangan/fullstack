@@ -35,12 +35,12 @@
                   <td>{{ user.created_at | myDate }}</td>
                   <td>
                     <a href="#" @click="editModal(user)">
-                      <i class="fa fa-edit blue"></i
-                    ></a>
+                      <i class="fa fa-edit blue"></i>
+                    </a>
                     /
                     <a href="#" @click="deleteUser(user.id)"
-                      ><i class="fa fa-trash red"></i
-                    ></a>
+                      ><i class="fa fa-trash red"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -56,8 +56,8 @@
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
+
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -109,14 +109,9 @@
 
               <div class="form-group">
                 <label>Bio</label>
-                <textarea
-                  v-model="form.bio"
-                  type="text"
-                  name="bio"
-                  placeholder="Short bio for the user"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('bio') }"
-                >
+                <textarea v-model="form.bio"
+                  type="text" name="bio"  placeholder="Short bio for the user"
+                  class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                 </textarea>
                 <has-error :form="form" field="bio"></has-error>
               </div>
@@ -153,6 +148,7 @@ export default {
       editMode: true,
       users: {},
       form: new Form({
+        id:"",
         name: "",
         email: "",
         password: "",
@@ -171,9 +167,22 @@ export default {
       this.form.fill(user);
     },
     updateUser(){
-     
+
+      this.$Progress.start();
+      this.form.put('api/user/'+this.form.id)
+      .then(() => {
+        swal.fire("Updated!", "Inforamtion has been Updated.", "success");
+         $("#exampleModal").modal("hide");
+          this.$Progress.finish();
+          Fire.$emit("loadUser");
+      })  
+      .catch(()=> {
+        this.$Progress.fail();
+      });
+
+      
     },
-    newModal() {
+    newModal() {  
       this.editMode = false;
       this.form.clear();
       this.form.reset();
