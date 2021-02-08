@@ -83,8 +83,9 @@
                     <div class="col-sm-10">
                       <input
                         v-model="form.name"
-                        type="email"
+                        type="text"
                         class="form-control"
+                        :class="{ 'is-invalid': form.errors.has('name') }"
                         id="inputName"
                         placeholder="Name"
                       />
@@ -98,10 +99,12 @@
                       <input
                         v-model="form.email"
                         type="email"
-                        class="form-control"
                         id="inputEmail"
                         placeholder="Email"
+                        class="form-control"
+                        :class="{ 'is-invalid': form.errors.has('email') }"
                       />
+                      <has-error :form="form" field="email"></has-error>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -145,9 +148,10 @@
                         id="inputExperience"
                         placeholder="bio"
                       ></textarea>
+                      <has-error :form="form" field="bio"></has-error>
                     </div>
                   </div>
-               <div class="form-group row">
+                  <div class="form-group row">
                     <label for="inputName2" class="col-sm-2 col-form-label"
                       >Password</label
                     >
@@ -156,9 +160,11 @@
                         v-model="form.password"
                         type="password"
                         class="form-control"
+                        :class="{ 'is-invalid': form.errors.has('password') }"
                         id="inputName2"
                         placeholder="Password"
                       />
+                      <has-error :form="form" field="password"></has-error>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -223,23 +229,23 @@ export default {
         .then(() => {})
         .catch((e) => console.log(e));
     },
-   updateProfile(e){
-                let file = e.target.files[0];
-                let reader = new FileReader();
-                let limit = 1024 * 1024 * 2;
-                if(file['size'] > limit){
-                    swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You are uploading a large file',
-                    })
-                    return false;
-                }
-                reader.onloadend = (file) => {
-                    this.form.photo = reader.result;
-                }
-                reader.readAsDataURL(file);
-            },
+    updateProfile(e) {
+      let file = e.target.files[0];
+      let reader = new FileReader();
+      let limit = 1024 * 1024 * 2;
+      if (file["size"] > limit) {
+        swal({
+          type: "error",
+          title: "Oops...",
+          text: "You are uploading a large file",
+        });
+        return false;
+      }
+      reader.onloadend = (file) => {
+        this.form.photo = reader.result;
+      };
+      reader.readAsDataURL(file);
+    },
   },
   created() {
     axios.get("api/profile").then(({ data }) => this.form.fill(data));
