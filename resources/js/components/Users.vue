@@ -27,18 +27,17 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Type</th>
-                <th>Registered At</th>
+                  <th>Registered At</th>
                   <th>Modify</th>
-                 
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="user in users" :key="user.id">
                   <td>{{ user.id }}</td>
-                  <td>{{user.name }}</td>
-                  <td>{{user.email}}</td>
-                  <td>{{user.type | upText}}</td>
-                  <td>{{user.created_at | myDate}}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.type | upText }}</td>
+                  <td>{{ user.created_at | myDate }}</td>
                   <td>
                     <a href="#"> <i class="fa fa-edit blue"></i></a>
                     /
@@ -169,24 +168,30 @@ export default {
     return {
       users: {},
       form: new Form({
-        name: '',
-        email: '',
-        password: '',
-        type: '',
-        bio: '',
-        photo: '',
+        name: "",
+        email: "",
+        password: "",
+        type: "",
+        bio: "",
+        photo: "",
       }),
     };
   },
   methods: {
     loadUsers() {
-      axios.get('api/user').then(({data}) => (this.users = data.data ));
+      axios.get("api/user").then(({ data }) => (this.users = data.data));
     },
     createUser() {
       this.$Progress.start();
-      this.form.post('api/user');
+      this.form.post("api/user");
       this.$Progress.finish();
-    }
+      $('#exampleModal').modal('toggle');
+
+      toast.fire({
+      icon: 'success',
+      title: 'Signed in successfully'
+    });
+    },
   },
   created() {
     this.loadUsers();
