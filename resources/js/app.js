@@ -37,6 +37,13 @@ const router = new VueRouter({
   routes 
 });
 
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
