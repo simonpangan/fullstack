@@ -112,6 +112,21 @@
                       />
                     </div>
                   </div>
+
+                  <div class="form-group row">
+                    <label for="photo" class="col-sm-2 col-form-label"
+                      >Profile Photo</label
+                    >
+                    <div class="col-sm-10">
+                      <input @change="updateProfile"
+                        type="file"
+                        class="form-control"
+                        id="inputName2"
+                        placeholder="Type"
+                      />
+                    </div>
+                  </div>
+
                   <div class="form-group row">
                     <label for="inputExperience" class="col-sm-2 col-form-label"
                       >Bio</label
@@ -175,6 +190,19 @@ export default {
   },
   mounted() {
     console.log("Component mounted.");
+  },
+  methods:{
+    updateProfile(e) {
+        let file = e.target.files[0];
+        //console.log(file);
+        var reader = new FileReader();
+        //let vm = this;
+        reader.onloadend = (file) => {
+          //console.log('RESULT', reader.result);
+          this.form.photo = reader.result;
+        }
+        reader.readAsDataURL(file);
+    }
   },
   created() {
     axios.get("api/profile").then(({ data }) => this.form.fill(data));
