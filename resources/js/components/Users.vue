@@ -61,7 +61,8 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+            <h5 v-show="!editMode " class="modal-title" id="exampleModalLabel">Add New</h5>
+            <h5 v-show="editMode" class="modal-title" id="exampleModalLabel">Edit </h5>
             <button
               type="button"
               class="close"
@@ -72,7 +73,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="createUser">
+            <form @submit.prevent="editMode ? updateUser() : createUser()">
               <div class="form-group">
                 <label>Name</label>
                 <input
@@ -88,27 +89,16 @@
 
               <div class="form-group">
                 <label>Email</label>
-                <input
-                  v-model="form.email"
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('email') }"
-                />
+                <input v-model="form.email"
+                  type="email" name="email" placeholder="Email Address" class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('email') }"/>
                 <has-error :form="form" field="email"></has-error>
               </div>
 
               <div class="form-group">
                 <label>Type</label>
-                <select
-                  v-model="form.type"
-                  type="text"
-                  name="type"
-                  placeholder="User Type"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('type') }"
-                >
+                <select v-model="form.type" type="text" name="type" placeholder="User Type" 
+                  class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                   <option value="">Select User Role</option>
                   <option value="admin">Admin</option>
                   <option value="user">Standard User</option>
@@ -144,14 +134,9 @@
               </div>
 
               <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button"  class="btn btn-danger" data-dismiss="modal"> Close </button>
+                <button v-show="editMode" type="submit" class="btn btn-primary">Update</button>
+                <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
               </div>
             </form>
           </div>
@@ -164,7 +149,8 @@
 <script>
 export default {
   data() {
-    return {
+    return {  
+      editMode: true,
       users: {},
       form: new Form({
         name: "",
@@ -178,11 +164,18 @@ export default {
   },
   methods: {
     editModal(user) {
+      this.editMode = true;
+      this.form.clear();
       this.form.reset();
       $("#exampleModal").modal("show");
       this.form.fill(user);
     },
+    updateUser(){
+     
+    },
     newModal() {
+      this.editMode = false;
+      this.form.clear();
       this.form.reset();
       $("#exampleModal").modal("show");
     },
