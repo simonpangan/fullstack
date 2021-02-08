@@ -49,7 +49,7 @@ Vue.use(VueProgressBar, {
 //sweat alert
 
 import swal from 'sweetalert2';
-window.swal = swal;
+window.swal = swal; 
 
 const toast = swal.mixin({
   toast: true,
@@ -58,13 +58,15 @@ const toast = swal.mixin({
   timer: 3000,
   timerProgressBar: true,
   didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
+    toast.addEventListener('mouseenter', swal.stopTimer)
+    toast.addEventListener('mouseleave', swal.resumeTimer)
   }
 });
 
 window.toast = toast;
 
+
+window.Fire = new Vue(); //windows means globaL  
 
 
 

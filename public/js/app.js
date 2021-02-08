@@ -2121,21 +2121,22 @@ __webpack_require__.r(__webpack_exports__);
     createUser: function createUser() {
       this.$Progress.start();
       this.form.post("api/user");
-      this.$Progress.finish();
-      $('#exampleModal').modal('toggle');
+      $('#exampleModal').modal('hide');
+      Fire.$emit('AfterCreated');
       toast.fire({
         icon: 'success',
         title: 'Signed in successfully'
       });
+      this.$Progress.finish();
     }
   },
   created: function created() {
     var _this2 = this;
 
     this.loadUsers();
-    setInterval(function () {
+    Fire.$on('AfterCreated', function () {
       return _this2.loadUsers();
-    }, 3000);
+    }); //   setInterval(() => this.loadUsers(),3000);
   }
 });
 
@@ -2206,11 +2207,13 @@ var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().mixin({
   timer: 3000,
   timerProgressBar: true,
   didOpen: function didOpen(toast) {
-    toast.addEventListener('mouseenter', Swal.stopTimer);
-    toast.addEventListener('mouseleave', Swal.resumeTimer);
+    toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().stopTimer));
+    toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().resumeTimer));
   }
 });
-window.toast = toast; // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+window.toast = toast;
+window.Fire = new Vue(); //windows means globaL  
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 var app = new Vue({
   el: '#app',

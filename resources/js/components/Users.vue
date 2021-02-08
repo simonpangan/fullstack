@@ -184,18 +184,23 @@ export default {
     createUser() {
       this.$Progress.start();
       this.form.post("api/user");
-      this.$Progress.finish();
-      $('#exampleModal').modal('toggle');
+      $('#exampleModal').modal('hide');
+
+      Fire.$emit('AfterCreated');
+
 
       toast.fire({
       icon: 'success',
       title: 'Signed in successfully'
     });
+     
+      this.$Progress.finish();
     },
   },
   created() {
     this.loadUsers();
-    setInterval(() => this.loadUsers(),3000);
+    Fire.$on('AfterCreated',() => this.loadUsers());
+ //   setInterval(() => this.loadUsers(),3000);
   },
 };
 </script>
