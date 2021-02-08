@@ -183,24 +183,25 @@ export default {
     },
     createUser() {
       this.$Progress.start();
-      this.form.post("api/user");
-      $('#exampleModal').modal('hide');
+      this.form
+        .post("api/user")
+        .then(() => {
+            $("#exampleModal").modal("hide");
+            Fire.$emit("AfterCreated");
+            toast.fire({
+              icon: "success",
+              title: "Signed in successfully",
+            });
+        })
+        .catch();
 
-      Fire.$emit('AfterCreated');
-
-
-      toast.fire({
-      icon: 'success',
-      title: 'Signed in successfully'
-    });
-     
       this.$Progress.finish();
     },
   },
   created() {
     this.loadUsers();
-    Fire.$on('AfterCreated',() => this.loadUsers());
- //   setInterval(() => this.loadUsers(),3000);
+    Fire.$on("AfterCreated", () => this.loadUsers());
+    //   setInterval(() => this.loadUsers(),3000);
   },
 };
 </script>

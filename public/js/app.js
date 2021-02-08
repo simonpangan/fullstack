@@ -2120,13 +2120,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     createUser: function createUser() {
       this.$Progress.start();
-      this.form.post("api/user");
-      $('#exampleModal').modal('hide');
-      Fire.$emit('AfterCreated');
-      toast.fire({
-        icon: 'success',
-        title: 'Signed in successfully'
-      });
+      this.form.post("api/user").then(function () {
+        $("#exampleModal").modal("hide");
+        Fire.$emit("AfterCreated");
+        toast.fire({
+          icon: "success",
+          title: "Signed in successfully"
+        });
+      })["catch"]();
       this.$Progress.finish();
     }
   },
@@ -2134,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     this.loadUsers();
-    Fire.$on('AfterCreated', function () {
+    Fire.$on("AfterCreated", function () {
       return _this2.loadUsers();
     }); //   setInterval(() => this.loadUsers(),3000);
   }
