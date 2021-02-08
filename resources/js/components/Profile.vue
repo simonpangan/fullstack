@@ -12,7 +12,10 @@
       <div class="col-md-12">
         <div class="card card-widget widget-user">
           <!-- Add the bg  color to the header using any of the bg-* classes -->
-          <div class="widget-user-header text-white" style="background: url('./img/user-cover.jpg') center center;">
+          <div
+            class="widget-user-header text-white"
+            style="background: url('./img/user-cover.jpg') center center"
+          >
             <h3 class="widget-user-username text-right">Elizabeth Pierce</h3>
             <h5 class="widget-user-desc text-right">Web Designer</h5>
           </div>
@@ -78,7 +81,8 @@
                       >Name</label
                     >
                     <div class="col-sm-10">
-                      <input v-model="form.name"
+                      <input
+                        v-model="form.name"
                         type="email"
                         class="form-control"
                         id="inputName"
@@ -91,7 +95,8 @@
                       >Email</label
                     >
                     <div class="col-sm-10">
-                      <input v-model="form.email"
+                      <input
+                        v-model="form.email"
                         type="email"
                         class="form-control"
                         id="inputEmail"
@@ -104,7 +109,8 @@
                       >Type</label
                     >
                     <div class="col-sm-10">
-                      <input v-model="form.type"
+                      <input
+                        v-model="form.type"
                         type="text"
                         class="form-control"
                         id="inputName2"
@@ -118,7 +124,8 @@
                       >Profile Photo</label
                     >
                     <div class="col-sm-10">
-                      <input @change="updateProfile"
+                      <input
+                        @change="updateProfile"
                         type="file"
                         class="form-control"
                         id="inputName2"
@@ -132,14 +139,28 @@
                       >Bio</label
                     >
                     <div class="col-sm-10">
-                      <textarea v-model="form.bio"
+                      <textarea
+                        v-model="form.bio"
                         class="form-control"
                         id="inputExperience"
                         placeholder="bio"
                       ></textarea>
                     </div>
                   </div>
-       
+               <div class="form-group row">
+                    <label for="inputName2" class="col-sm-2 col-form-label"
+                      >Password</label
+                    >
+                    <div class="col-sm-10">
+                      <input
+                        v-model="form.password"
+                        type="password"
+                        class="form-control"
+                        id="inputName2"
+                        placeholder="Password"
+                      />
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
                       <div class="checkbox">
@@ -152,8 +173,12 @@
                   </div>
                   <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">
-                        Submit
+                      <button
+                        class="btn btn-success"
+                        type="submit"
+                        @click.prevent="updateInfo"
+                      >
+                        Update
                       </button>
                     </div>
                   </div>
@@ -177,35 +202,47 @@
 export default {
   data() {
     return {
-        form: new Form({
-            id:"",
-            name: "",
-            email: "",
-            password: "",
-            type: "",
-            bio: "",
-            photo: "",
-        }),
-    }
+      form: new Form({
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        type: "",
+        bio: "",
+        photo: "",
+      }),
+    };
   },
   mounted() {
     console.log("Component mounted.");
   },
-  methods:{
-    updateProfile(e) {
-        let file = e.target.files[0];
-        //console.log(file);
-        var reader = new FileReader();
-        //let vm = this;
-        reader.onloadend = (file) => {
-          //console.log('RESULT', reader.result);
-          this.form.photo = reader.result;
-        }
-        reader.readAsDataURL(file);
-    }
+  methods: {
+    updateInfo() {
+      this.form
+        .put("api/profile")
+        .then(() => {})
+        .catch((e) => console.log(e));
+    },
+   updateProfile(e){
+                let file = e.target.files[0];
+                let reader = new FileReader();
+                let limit = 1024 * 1024 * 2;
+                if(file['size'] > limit){
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading a large file',
+                    })
+                    return false;
+                }
+                reader.onloadend = (file) => {
+                    this.form.photo = reader.result;
+                }
+                reader.readAsDataURL(file);
+            },
   },
   created() {
     axios.get("api/profile").then(({ data }) => this.form.fill(data));
-  }
+  },
 };
 </script>

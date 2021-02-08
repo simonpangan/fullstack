@@ -2071,6 +2071,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2089,15 +2114,28 @@ __webpack_require__.r(__webpack_exports__);
     console.log("Component mounted.");
   },
   methods: {
+    updateInfo: function updateInfo() {
+      this.form.put("api/profile").then(function () {})["catch"](function (e) {
+        return console.log(e);
+      });
+    },
     updateProfile: function updateProfile(e) {
       var _this = this;
 
-      var file = e.target.files[0]; //console.log(file);
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      var limit = 1024 * 1024 * 2;
 
-      var reader = new FileReader(); //let vm = this;
+      if (file['size'] > limit) {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You are uploading a large file'
+        });
+        return false;
+      }
 
       reader.onloadend = function (file) {
-        //console.log('RESULT', reader.result);
         _this.form.photo = reader.result;
       };
 
@@ -64824,9 +64862,73 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 col-form-label",
+                          attrs: { for: "inputName2" }
+                        },
+                        [_vm._v("Password")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.password,
+                              expression: "form.password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "password",
+                            id: "inputName2",
+                            placeholder: "Password"
+                          },
+                          domProps: { value: _vm.form.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _vm._m(2),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "offset-sm-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.updateInfo($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                      Update\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -64949,20 +65051,6 @@ var staticRenderFns = [
             _c("a", { attrs: { href: "#" } }, [_vm._v("terms and conditions")])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "offset-sm-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-danger", attrs: { type: "submit" } },
-          [_vm._v("\n                      Submit\n                    ")]
-        )
       ])
     ])
   }

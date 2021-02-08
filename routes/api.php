@@ -23,3 +23,4 @@ use App\Http\Controllers\API\UserController;
 Route::apiResource('user', UserController::class);
 
 Route::get('profile',[UserController::class, 'profile']);
+Route::put('profile',[UserController::class, 'updateProfile']);
