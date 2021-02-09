@@ -2741,6 +2741,9 @@ var routes = [{
 }, {
   path: '/developer',
   component: __webpack_require__(/*! ./components/Developer.vue */ "./resources/js/components/Developer.vue").default
+}, {
+  path: '*',
+  component: __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default
 }];
 Vue.filter('upText', function (text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
