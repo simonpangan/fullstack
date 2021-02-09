@@ -11,10 +11,18 @@ import VueRouter from 'vue-router';
 import Gate from "./Gate";
 Vue.prototype.$gate = new Gate(window.user);
 
+
+
 //global  // means can access in any url
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+//not found
+
+Vue.component(
+  'not-found', 
+  require('./components/NotFound.vue').default);
 
 
 Vue.use(VueRouter);
@@ -25,6 +33,7 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
+    
   ];
 
 Vue.filter('upText',(text) => {

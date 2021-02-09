@@ -51,6 +51,10 @@
         <!-- /.card -->
       </div>
     </div>
+
+    <div v-if="!$gate.isAdmin()">
+        <not-found> </not-found>
+    </div>
     <div
       class="modal fade"
       id="exampleModal"
