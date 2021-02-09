@@ -20,7 +20,11 @@
             <h5 class="widget-user-desc text-right">Web Designer</h5>
           </div>
           <div class="widget-user-image">
-            <img class="img-circle" src="" alt="User Avatar" />
+            <img
+              class="img-circle"
+              :src="getProfilePhoto()"
+              alt="User Avatar"
+            />
           </div>
           <div class="card-footer">
             <div class="row">
@@ -223,11 +227,34 @@ export default {
     console.log("Component mounted.");
   },
   methods: {
+    getProfilePhoto() {
+
+      let photo = (this.form.photo.length > 100) ? this.form.photo: "img/profile/" + this.form.photo;
+      
+      return photo;
+    },
     updateInfo() {
+      this.$Progress.start();
       this.form
         .put("api/profile")
-        .then(() => {})
-        .catch((e) => console.log(e));
+        .then(() => {
+          this.$Progress.finish();
+          //Toaster from Sweet Alert
+          toast({
+            type: "success",
+            title: "Profile updated!",
+          });
+          Fire.$emit("AfterUpdate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+
+          //Toaster from Sweet Alert
+          toast({
+            type: "error",
+            title: "Something went wrong!",
+          });
+        });
     },
     updateProfile(e) {
       let file = e.target.files[0];
