@@ -28,12 +28,13 @@ class UserController extends Controller
     }
     public function search()
     {
-        $users = "";
         if($search = \Request::get('q')) {
             $users = User::where(function($query) use ($search) {
                 $query->where('name','LIKE',"%$search%")
                 ->orWhere('email','LIKE',"%$search%");
             })->paginate(10);
+        }else{
+            return User::latest()->paginate(2);
         };
         return $users;
     }

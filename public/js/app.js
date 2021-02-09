@@ -2640,6 +2640,7 @@ __webpack_require__.r(__webpack_exports__);
     Fire.$on('searching', function () {
       var query = _this5.$parent.search; //take information from the root instanceo f the class
 
+      console.log(query);
       axios.get('api/findUser?q=' + query).then(function (data) {
         _this5.users = data.data;
       })["catch"](function () {});
@@ -2794,9 +2795,9 @@ var app = new Vue({
     search: ''
   },
   methods: {
-    searchit: function searchit() {
+    searchit: _.debounce(function () {
       Fire.$emit('searching');
-    }
+    }, 1000)
   }
 });
 
