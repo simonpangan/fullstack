@@ -204,7 +204,7 @@ export default {
             this.form.delete("api/user/" + id).then(() => {
               Fire.$emit("loadUser");
               swal.fire("Deleted!", "Data has been deleted.", "success");
-            });
+            }).catch(() => swal.fire("Failed!", "There was something wrong.", "warning"));
           }
         })
         .catch(() => {

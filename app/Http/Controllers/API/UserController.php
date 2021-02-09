@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-       
+    
     }
 
     public function index()
@@ -56,12 +56,12 @@ class UserController extends Controller
 
     public function profile()
     {
-        return User::find(5);
+        return User::find(1);
     }
 
     public function updateProfile(Request $request)
     {
-        $user = User::find(5);
+        $user = User::find(1);
 
         $this->validate($request,[
             'name' => 'required|string|max:191',
@@ -134,6 +134,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];

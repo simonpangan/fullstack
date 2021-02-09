@@ -2429,6 +2429,8 @@ __webpack_require__.r(__webpack_exports__);
           _this2.form["delete"]("api/user/" + id).then(function () {
             Fire.$emit("loadUser");
             swal.fire("Deleted!", "Data has been deleted.", "success");
+          })["catch"](function () {
+            return swal.fire("Failed!", "There was something wrong.", "warning");
           });
         }
       })["catch"](function () {
