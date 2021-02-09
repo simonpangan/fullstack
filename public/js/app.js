@@ -2637,6 +2637,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this5 = this;
 
+    Fire.$on('searching', function () {
+      var query = _this5.$parent.search; //take information from the root instanceo f the class
+
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        _this5.users = data.data;
+      })["catch"](function () {});
+    });
     this.loadUsers();
     Fire.$on("loadUser", function () {
       return _this5.loadUsers();
@@ -2782,7 +2789,15 @@ window.Fire = new Vue(); //windows means globaL
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    search: ''
+  },
+  methods: {
+    searchit: function searchit() {
+      Fire.$emit('searching');
+    }
+  }
 });
 
 /***/ }),
