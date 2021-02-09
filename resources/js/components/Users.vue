@@ -27,7 +27,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="user in users" :key="user.id">
+                <!-- change for pagination -->
+                <tr v-for="user in users.data" :key="user.id">
                   <td>{{ user.id }}</td>
                   <td>{{ user.name }}</td>
                   <td>{{ user.email }}</td>
@@ -46,27 +47,34 @@
               </tbody>
             </table>
           </div>
+
+          <div class="card-footer">
+            <pagination
+              :data="users"
+              @pagination-change-page="getResults"
+            ></pagination>
+          </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
       </div>
-    </div>
-
-    <div v-if="!$gate.isAdmin()">
-        <not-found> </not-found>
     </div>
     <div
       class="modal fade"
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 v-show="!editMode " class="modal-title" id="exampleModalLabel">Add New</h5>
-            <h5 v-show="editMode" class="modal-title" id="exampleModalLabel">Edit </h5>
+            <h5 v-show="!editMode" class="modal-title" id="exampleModalLabel">
+              Add New
+            </h5>
+            <h5 v-show="editMode" class="modal-title" id="exampleModalLabel">
+              Edit
+            </h5>
             <button
               type="button"
               class="close"
@@ -93,16 +101,27 @@
 
               <div class="form-group">
                 <label>Email</label>
-                <input v-model="form.email"
-                  type="email" name="email" placeholder="Email Address" class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('email') }"/>
+                <input
+                  v-model="form.email"
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('email') }"
+                />
                 <has-error :form="form" field="email"></has-error>
               </div>
 
               <div class="form-group">
                 <label>Type</label>
-                <select v-model="form.type" type="text" name="type" placeholder="User Type" 
-                  class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                <select
+                  v-model="form.type"
+                  type="text"
+                  name="type"
+                  placeholder="User Type"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('type') }"
+                >
                   <option value="">Select User Role</option>
                   <option value="admin">Admin</option>
                   <option value="user">Standard User</option>
@@ -113,9 +132,14 @@
 
               <div class="form-group">
                 <label>Bio</label>
-                <textarea v-model="form.bio"
-                  type="text" name="bio"  placeholder="Short bio for the user"
-                  class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
+                <textarea
+                  v-model="form.bio"
+                  type="text"
+                  name="bio"
+                  placeholder="Short bio for the user"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('bio') }"
+                >
                 </textarea>
                 <has-error :form="form" field="bio"></has-error>
               </div>
@@ -133,9 +157,23 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button"  class="btn btn-danger" data-dismiss="modal"> Close </button>
-                <button v-show="editMode" type="submit" class="btn btn-primary">Update</button>
-                <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button v-show="editMode" type="submit" class="btn btn-primary">
+                  Update
+                </button>
+                <button
+                  v-show="!editMode"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Create
+                </button>
               </div>
             </form>
           </div>
@@ -163,6 +201,12 @@ export default {
     };
   },
   methods: {
+    getResults(page = 1) {
+      axios.get('api/user?page=' + page)
+				.then(response => {
+					this.users = response.data;
+				});
+    },
     editModal(user) {
       this.editMode = true;
       this.form.clear();
@@ -217,8 +261,9 @@ export default {
     },
     loadUsers() {
       if(this.$gate.isAdmin()) {
-          axios.get("api/user").then(({ data }) => (this.users = data.data));
+          axios.get("api/user").then(({ data }) => (this.users = data)); //change to for pagination to work
       }
+
     },
     createUser() {
       this.$Progress.start();

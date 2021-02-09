@@ -25,6 +25,10 @@ Vue.component(
   require('./components/NotFound.vue').default);
 
 
+//pagination 
+
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 Vue.use(VueRouter);
 
 
