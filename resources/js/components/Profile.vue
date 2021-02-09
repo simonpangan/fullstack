@@ -93,6 +93,7 @@
                         id="inputName"
                         placeholder="Name"
                       />
+                      <has-error :form="form" field="name"></has-error>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -228,13 +229,18 @@ export default {
   },
   methods: {
     getProfilePhoto() {
+      let photo =
+        this.form.photo.length > 100
+          ? this.form.photo
+          : "img/profile/" + this.form.photo;
 
-      let photo = (this.form.photo.length > 100) ? this.form.photo: "img/profile/" + this.form.photo;
-      
       return photo;
     },
     updateInfo() {
       this.$Progress.start();
+      if (this.form.password == "") {
+        this.form.password = undefined;
+      }
       this.form
         .put("api/profile")
         .then(() => {
