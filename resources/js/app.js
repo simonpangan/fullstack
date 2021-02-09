@@ -8,6 +8,9 @@ import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 import VueRouter from 'vue-router';
 
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
 //global  // means can access in any url
 window.Form = Form;
 Vue.component(HasError.name, HasError);
