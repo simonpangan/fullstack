@@ -18,6 +18,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->user = new UserService();
+        $this->middleware('admin');
     }
 
     public function index()
@@ -118,9 +119,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if (!Gate::allows('isAdmin')) {
-            abort(403);
-        }
+        // if (!Gate::allows('isAdmin')) {
+        //     abort(403);
+        // }
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];
