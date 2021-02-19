@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\UserService;
-
+use Auth;
+use Illuminate\Support\Facades\Gate;
 class UserController extends Controller
 {
     
@@ -21,7 +22,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return User::latest()->paginate(2);
+        return User::latest()->paginate(10);
     }
     public function search()
     {
@@ -66,7 +67,7 @@ class UserController extends Controller
 
     public function profile()
     {
-        return User::find(1);
+        return Auth::user();
     }
 
     // public function updateProfile(Request $request)]
@@ -117,7 +118,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];

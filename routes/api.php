@@ -18,10 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
     return $request->user();
 });
-
 use App\Http\Controllers\API\UserController;
 
-Route::apiResource('user', UserController::class);
-Route::get('profile',[UserController::class, 'profile']);
-Route::get('findUser',[UserController::class, 'search']);
-Route::put('profile',[UserController::class, 'updateProfile']);
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::apiResource('user', UserController::class);
+    Route::get('profile',[UserController::class, 'profile']);
+    Route::get('findUser',[UserController::class, 'search']);
+    Route::put('profile',[UserController::class, 'updateProfile']);
+});
+
+
+    
